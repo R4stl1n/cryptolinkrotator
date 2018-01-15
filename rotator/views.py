@@ -1,6 +1,8 @@
+from django.template import loader
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
+from brake.decorators import ratelimit
 
 from .models import Rotator
 from .models import RotatorLink
@@ -8,8 +10,10 @@ from .models import RotatorLink
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the index.")
+	template = loader.get_template('rotator/index.html')
+	return HttpResponse(template.render({}, request))
 
+@ratelimit(rate='10/h')
 def rotate(request, rotate):
     
     rotator = get_object_or_404(Rotator, rotator_slug=rotate)
