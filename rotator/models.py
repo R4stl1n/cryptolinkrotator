@@ -21,4 +21,4 @@ class RotatorLink(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.discord_user_name + ' - Rotator Link'
+        return rotator.rotator_name + ' - ' +self.discord_user_name + ' - Rotator Link'
